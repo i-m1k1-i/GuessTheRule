@@ -43,21 +43,7 @@ local function playCoinCollectSound(coin: BasePart)
 	end)
 end
 
-local function collectCoin(player: Player, coin: BasePart)
-	if coin:GetAttribute("IsCollecting") then
-		return
-	end
-
-	coin:SetAttribute("IsCollecting", true)
-	coin.CanTouch = false
-
-	local playerData = PlayerDataUtil.GetPlayerDataFolder(player)
-	if playerData then
-		playerData.MainStats.Coins.Value += 1
-	end
-
-	ActionTrackingService.FireAction(player, Actions.Common.Coin)
-
+local function animateCollectedCoin(coin: BasePart)
 	local startPosition = coin.Position
 	local decals = getDecals(coin)
 	local duration = 0.45
@@ -88,6 +74,59 @@ local function collectCoin(player: Player, coin: BasePart)
 	end)
 end
 
+local function collectCoin(player: Player, coin: BasePart)
+	local playerData = PlayerDataUtil.GetPlayerDataFolder(player)
+	if playerData then
+		playerData.MainStats.Coins.Value += 1
+	end
+
+	ActionTrackingService.FireAction(player, Actions.Common.Coin)
+	animateCollectedCoin(coin)
+end
+
+local function collectFakeCoin(player: Player, coin: BasePart)
+	ActionTrackingService.FireAction(player, Actions.Common.Coin)
+	animateCollectedCoin(coin)
+end
+
+local function spawnCoin(position: Vector3, isFake: boolean, onCollected: (Player, BasePart) -> ())
+	local coin = coinTemplate:Clone()
+	coin.Name = "CollectableCoin"
+	coin.Anchored = true
+	coin.CanCollide = false
+	coin.CanTouch = true
+	coin.Transparency = 0
+	coin.Position = position
+	coin:SetAttribute("IsFakeCoin", isFake)
+	coin.Parent = workspace
+
+	game.CollectionService:AddTag(coin, COIN_TAG)
+	coin.Touched:Connect(function(hit)
+		local character = hit.Parent
+		if not character then
+			return
+		end
+
+		local player = game.Players:GetPlayerFromCharacter(character)
+		if not player or coin:GetAttribute("IsCollecting") then
+			return
+		end
+
+		coin:SetAttribute("IsCollecting", true)
+		coin.CanTouch = false
+		onCollected(player, coin)
+	end)
+
+	return coin
+end
+
+function CoinSpawner.SpawnFakeCoin(position: Vector3): boolean
+	local coinHeight = coinTemplate.Size.Y / 2
+	local coin = spawnCoin(position + Vector3.new(0, coinHeight, 0), true, collectFakeCoin)
+	game.Debris:AddItem(coin, 45)
+	return true
+end
+
 function CoinSpawner.HandleSpawner(part: BasePart, maxCoins: number)
 	if part:GetAttribute("CoinSpawnerInitialized") then
 		return
@@ -98,36 +137,13 @@ function CoinSpawner.HandleSpawner(part: BasePart, maxCoins: number)
 	local coinCount = math.max(0, tonumber(maxCoins) or default.MaxCoins)
 
 	for _ = 1, coinCount do
-		local coin = coinTemplate:Clone()
 		local halfSize = part.Size / 2
 		local randomPosition = Vector3.new(
 			math.random(-halfSize.X, halfSize.X),
 			default.HeightOffset,
 			math.random(-halfSize.Z, halfSize.Z)
 		)
-
-		coin.Name = "CollectableCoin"
-		coin.Parent = workspace
-		coin.Position = part.Position + randomPosition
-		coin.Anchored = true
-		coin.CanCollide = false
-		coin.CanTouch = true
-		coin.Transparency = 0
-
-		game.CollectionService:AddTag(coin, COIN_TAG)
-		coin.Touched:Connect(function(hit)
-			local character = hit.Parent
-			if not character then
-				return
-			end
-
-			local player = game.Players:GetPlayerFromCharacter(character)
-			if not player then
-				return
-			end
-
-			collectCoin(player, coin)
-		end)
+		spawnCoin(part.Position + randomPosition, false, collectCoin)
 	end
 end
 

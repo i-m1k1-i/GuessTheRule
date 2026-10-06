@@ -19,15 +19,18 @@ local RoundService = {} :: {
 	State: RoundState,
 	RuleChanged: any,
 	PlayerViolated: any,
+	TraitorChanged: any,
 	MatchEnded: any,
 	StartMatch: (self: any, players: {Player}) -> boolean,
 	OnPlayerAction: (self: any, player: Player, actionName: string) -> boolean,
 	HandleGuess: (self: any, player: Player, guess: {string}) -> {[string]: any},
+	GetTraitor: () -> Player?,
 }
 
 RoundService.State = "Lobby"
 RoundService.RuleChanged = GoodSignal.new()
 RoundService.PlayerViolated = GoodSignal.new()
+RoundService.TraitorChanged = GoodSignal.new()
 RoundService.MatchEnded = GoodSignal.new()
 
 local _currentRule: {string}? = nil
@@ -359,6 +362,10 @@ local function getUniquePlayers(players: {Player}): {Player}
 	return uniquePlayers
 end
 
+function RoundService.GetTraitor(): Player?
+	return _traitor
+end
+
 function RoundService:StartMatch(players: {Player}): boolean
 	if RoundService.State ~= "Lobby" then
 		return false
@@ -381,6 +388,7 @@ function RoundService:StartMatch(players: {Player}): boolean
 	end
 
 	_traitor = TraitorService.SelectTraitor(matchPlayers)
+	RoundService.TraitorChanged:Fire(_traitor)
 	if _traitor then
 		Network:FireClient(_traitor, "AssignedTraitor", {})
 	end
@@ -424,6 +432,7 @@ function RoundService:_endMatch(winner: string?)
 	_matchPlayers = {}
 	_currentRule = nil
 	_traitor = nil
+	RoundService.TraitorChanged:Fire(nil)
 	_rulesSolvedThisMatch = 0
 	_matchEndsAt = nil
 	TraitorService.Clear()
@@ -458,6 +467,7 @@ function RoundService.Init()
 				table.insert(remainingPlayers, remainingPlayer)
 			end
 			_traitor = TraitorService.SelectTraitor(remainingPlayers)
+			RoundService.TraitorChanged:Fire(_traitor)
 			if _traitor then
 				Network:FireClient(_traitor, "AssignedTraitor", {})
 				Network:FireClient(_traitor, "RuleChanged", {

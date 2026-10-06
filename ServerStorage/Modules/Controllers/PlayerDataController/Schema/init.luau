@@ -12,6 +12,7 @@ return DataSchema.new({
 		DataType = "Table",
 		Schema = require(objectSchemas.DeveloperProductReceipt)
 	},
+	TraitorAbilities = require(script.TraitorAbilities),
 	MainStats = {
 		DataType = "Table",
 		Schema = DataSchema.new({

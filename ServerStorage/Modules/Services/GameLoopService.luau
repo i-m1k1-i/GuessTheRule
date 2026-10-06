@@ -6,6 +6,7 @@ local Network = require(Packages.Network)
 local MapsConfig = require(Shared.Config.Maps)
 local RoundService = require(Services.RoundService)
 local TaskService = require(Services.TaskService)
+local TraitorAbilityService = require(Services.TraitorAbilityService)
 
 local GameLoopService = {}
 local _activeMap: Instance? = nil
@@ -192,9 +193,11 @@ function GameLoopService.Init()
 				continue
 			end
 
+			TraitorAbilityService:StartRound(players, RoundService.GetTraitor())
 			TaskService:StartRound(players, mapDefinition.Name)
 
 			waitForMatchToEnd()
+			TraitorAbilityService:EndRound()
 			TaskService:EndRound()
 			destroyActiveMap()
 			returnPlayersToLobby(players)

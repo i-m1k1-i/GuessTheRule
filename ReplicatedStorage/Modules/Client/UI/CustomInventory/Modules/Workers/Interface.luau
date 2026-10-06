@@ -22,6 +22,8 @@ local ActiveConnections = {}
 local ActiveDragConnections = {}
 local InventorySlotCache = {}
 local StackTrackerConnections = {}
+local CooldownSlotDisplays = {}
+local DisconnectCooldownRender: RBXScriptConnection? = nil
 
 local DragLock = false
 
@@ -115,6 +117,32 @@ function module:Setup(ui, modules, bindables)
 	self:SetupGamepadControls()
 
 	UI.Parent = playerUI
+	if DisconnectCooldownRender then
+		DisconnectCooldownRender:Disconnect()
+	end
+	DisconnectCooldownRender = game:GetService("RunService").RenderStepped:Connect(function()
+		local now = workspace:GetServerTimeNow()
+		for slot, display in CooldownSlotDisplays do
+			if not slot.Parent then
+				CooldownSlotDisplays[slot] = nil
+				continue
+			end
+
+			local cooldownEndsAt = display.Tool:GetAttribute("AbilityCooldownEndsAt")
+			local usesRemaining = display.Tool:GetAttribute("AbilityUsesRemaining")
+			local remaining = typeof(cooldownEndsAt) == "number" and math.ceil(cooldownEndsAt - now) or 0
+			if remaining > 0 then
+				display.Frame.Visible = true
+				display.Label.Text = tostring(remaining)
+			elseif typeof(usesRemaining) == "number" then
+				display.Frame.Visible = true
+				display.Label.Text = tostring(math.max(0, usesRemaining))
+			else
+				display.Frame.Visible = false
+				display.Label.Text = ""
+			end
+		end
+	end)
 end
 
 function module:SetEnabled(enabled)
@@ -431,7 +459,28 @@ function module:CreateInventorySlot(toolObject, slotNumber, validPage, emptyPage
 	end
 
 	invSlot.Parent = validPage
+	self:SetupCooldownDisplay(invSlot, toolObject)
 	return invSlot
+end
+
+function module:SetupCooldownDisplay(slot: Frame, tool: Tool?)
+	local cooldownFrame = slot:FindFirstChild("Cooldown", true)
+	local cooldownLabel = cooldownFrame and cooldownFrame:FindFirstChildWhichIsA("TextLabel", true)
+	if not cooldownFrame or not cooldownFrame:IsA("Frame") or not cooldownLabel then
+		return
+	end
+
+	cooldownFrame.Visible = false
+	if tool then
+		CooldownSlotDisplays[slot] = {
+			Tool = tool,
+			Frame = cooldownFrame,
+			Label = cooldownLabel,
+		}
+	else
+		CooldownSlotDisplays[slot] = nil
+		cooldownLabel.Text = ""
+	end
 end
 
 function module:SetItemName(slot, itemName)
@@ -698,6 +747,7 @@ end
 function module:SetupSlotReferences(slotObjects)
 	local function clearTemplate(template)
 		clearStackTrackerConnection(template)
+		self:SetupCooldownDisplay(template, nil)
 		template.Main.Icon.Image = ""
 		template.Main.Stacks.Text = ""
 		template.Main.Stacks.Visible = false
@@ -716,6 +766,7 @@ function module:SetupSlotReferences(slotObjects)
 
 	local function applyTool(template, tool: Tool)
 		clearStackTrackerConnection(template)
+		self:SetupCooldownDisplay(template, tool)
 		template.Main.Icon.Image = tool.TextureId or ""
 
 		if not tool.TextureId or tool.TextureId == "" then
@@ -880,6 +931,11 @@ function module:Cleanup()
 		task.cancel(QueuedSortThread)
 		QueuedSortThread = nil
 	end
+	if DisconnectCooldownRender then
+		DisconnectCooldownRender:Disconnect()
+		DisconnectCooldownRender = nil
+	end
+	table.clear(CooldownSlotDisplays)
 end
 
 
