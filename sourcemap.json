@@ -1,0 +1,722 @@
+{
+  "name": "game",
+  "className": "DataModel",
+  "children": [
+    {
+      "name": "StarterPlayer",
+      "className": "StarterPlayer",
+      "pluginManaged": true,
+      "children": [
+        {
+          "name": "StarterPlayerScripts",
+          "className": "StarterPlayerScripts",
+          "pluginManaged": true,
+          "children": [
+            {
+              "name": "PurchaseButtonsInit",
+              "className": "LocalScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "d:/RobloxExternalScripting/GuessTheRule/StarterPlayerScripts/PurchaseButtonsInit/init.local.luau"
+              ],
+              "children": [
+                {
+                  "name": "PurchaseButtons",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/StarterPlayerScripts/PurchaseButtonsInit/PurchaseButtons.luau"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ButtonAnimsSetup",
+              "className": "LocalScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "d:/RobloxExternalScripting/GuessTheRule/StarterPlayerScripts/ButtonAnimsSetup/init.local.luau"
+              ],
+              "children": [
+                {
+                  "name": "ButtonAnimation",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/StarterPlayerScripts/ButtonAnimsSetup/ButtonAnimation.luau"
+                  ]
+                },
+                {
+                  "name": "Sounds",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/StarterPlayerScripts/ButtonAnimsSetup/Sounds.luau"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Initializer",
+              "className": "LocalScript",
+              "pluginManaged": true,
+              "filePaths": [
+                "d:/RobloxExternalScripting/GuessTheRule/StarterPlayerScripts/Initializer.local.luau"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ReplicatedStorage",
+      "className": "ReplicatedStorage",
+      "pluginManaged": true,
+      "children": [
+        {
+          "name": "Modules",
+          "className": "Folder",
+          "pluginManaged": true,
+          "children": [
+            {
+              "name": "Shared",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "Config",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Shared/Config/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "Monetization",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Shared/Config/Monetization.luau"
+                      ]
+                    },
+                    {
+                      "name": "Actions",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Shared/Config/Actions.luau"
+                      ]
+                    },
+                    {
+                      "name": "Types",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Shared/Config/Types.luau"
+                      ]
+                    },
+                    {
+                      "name": "Maps",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Shared/Config/Maps.luau"
+                      ]
+                    },
+                    {
+                      "name": "Strings",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Shared/Config/Strings.luau"
+                      ]
+                    },
+                    {
+                      "name": "Game",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Shared/Config/Game.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Notification",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Shared/Notification.luau"
+                  ]
+                },
+                {
+                  "name": "Utility",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "Monetization",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Shared/Utility/Monetization.luau"
+                      ]
+                    },
+                    {
+                      "name": "SafeIsA",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Shared/Utility/SafeIsA.luau"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Client",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "UI",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "UIRefs",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/UI/UIRefs.luau"
+                      ]
+                    },
+                    {
+                      "name": "ScreenController",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/UI/ScreenController/init.luau"
+                      ],
+                      "children": [
+                        {
+                          "name": "StateEffects",
+                          "className": "ModuleScript",
+                          "pluginManaged": true,
+                          "filePaths": [
+                            "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/UI/ScreenController/StateEffects.luau"
+                          ]
+                        },
+                        {
+                          "name": "Animations",
+                          "className": "ModuleScript",
+                          "pluginManaged": true,
+                          "filePaths": [
+                            "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/UI/ScreenController/Animations.luau"
+                          ]
+                        },
+                        {
+                          "name": "ButtonsController",
+                          "className": "ModuleScript",
+                          "pluginManaged": true,
+                          "filePaths": [
+                            "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/UI/ScreenController/ButtonsController.luau"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "CoinsView",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/UI/CoinsView.luau"
+                      ]
+                    },
+                    {
+                      "name": "LeftButtons",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/UI/LeftButtons.luau"
+                      ]
+                    },
+                    {
+                      "name": "MobileControls",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/UI/MobileControls.luau"
+                      ]
+                    },
+                    {
+                      "name": "ScreenControllers",
+                      "className": "Folder",
+                      "pluginManaged": true,
+                      "children": [
+                        {
+                          "name": "Settings",
+                          "className": "ModuleScript",
+                          "pluginManaged": true,
+                          "filePaths": [
+                            "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/UI/ScreenControllers/Settings.luau"
+                          ]
+                        },
+                        {
+                          "name": "TopBar",
+                          "className": "ModuleScript",
+                          "pluginManaged": true,
+                          "filePaths": [
+                            "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/UI/ScreenControllers/TopBar.luau"
+                          ]
+                        },
+                        {
+                          "name": "Guess",
+                          "className": "ModuleScript",
+                          "pluginManaged": true,
+                          "filePaths": [
+                            "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/UI/ScreenControllers/Guess.luau"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Game",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "SpectatorController",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/Game/SpectatorController.luau"
+                      ]
+                    },
+                    {
+                      "name": "CollectableCoinController",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/Game/CollectableCoinController.luau"
+                      ]
+                    },
+                    {
+                      "name": "SprintController",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/Game/SprintController.luau"
+                      ]
+                    },
+                    {
+                      "name": "DashController",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/Game/DashController.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Other",
+                  "className": "Folder",
+                  "pluginManaged": true,
+                  "children": [
+                    {
+                      "name": "DeviceController",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/Other/DeviceController.luau"
+                      ]
+                    },
+                    {
+                      "name": "CameraLockController",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Client/Other/CameraLockController.luau"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Packages",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "Network",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Packages/Network/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "Callback",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Packages/Network/Callback.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Signals",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Packages/Signals/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "GoodSignal",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Packages/Signals/GoodSignal.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Maid",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Packages/Maid.luau"
+                  ]
+                },
+                {
+                  "name": "Promise",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Packages/Promise.luau"
+                  ]
+                },
+                {
+                  "name": "ModuleLoader",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Packages/ModuleLoader.luau"
+                  ]
+                },
+                {
+                  "name": "PlayerDataUtil",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ReplicatedStorage/Modules/Packages/PlayerDataUtil/init.luau"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ServerScriptService",
+      "className": "ServerScriptService",
+      "pluginManaged": true,
+      "children": [
+        {
+          "name": "MonetizationHandler",
+          "className": "Script",
+          "pluginManaged": true,
+          "filePaths": [
+            "d:/RobloxExternalScripting/GuessTheRule/ServerScriptService/MonetizationHandler/init.legacy.luau"
+          ],
+          "children": [
+            {
+              "name": "Modules",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "GamepassHandlers",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerScriptService/MonetizationHandler/Modules/GamepassHandlers.luau"
+                  ]
+                },
+                {
+                  "name": "ProductHandlers",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerScriptService/MonetizationHandler/Modules/ProductHandlers.luau"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Initializer",
+          "className": "Script",
+          "pluginManaged": true,
+          "filePaths": [
+            "d:/RobloxExternalScripting/GuessTheRule/ServerScriptService/Initializer.legacy.luau"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ServerStorage",
+      "className": "ServerStorage",
+      "pluginManaged": true,
+      "children": [
+        {
+          "name": "Modules",
+          "className": "Folder",
+          "pluginManaged": true,
+          "children": [
+            {
+              "name": "Packages",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "DataStoreWrapper",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/DataStoreWrapper/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "MiddlewareFunction",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/DataStoreWrapper/MiddlewareFunction.luau"
+                      ]
+                    },
+                    {
+                      "name": "MiddlewareData",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/DataStoreWrapper/MiddlewareData.luau"
+                      ]
+                    },
+                    {
+                      "name": "MockDataStoreWrapper",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/DataStoreWrapper/MockDataStoreWrapper.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "ODSWrapper",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/ODSWrapper.luau"
+                  ]
+                },
+                {
+                  "name": "PlayerDataService",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/PlayerDataService/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "DataTypes",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/PlayerDataService/DataTypes.luau"
+                      ]
+                    },
+                    {
+                      "name": "Schemas",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/PlayerDataService/Schemas.luau"
+                      ]
+                    },
+                    {
+                      "name": "PlayerDataServer",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/PlayerDataService/PlayerDataServer/init.luau"
+                      ],
+                      "children": [
+                        {
+                          "name": "MetadataSchema",
+                          "className": "ModuleScript",
+                          "pluginManaged": true,
+                          "filePaths": [
+                            "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/PlayerDataService/PlayerDataServer/MetadataSchema.luau"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "MiddlewareTable",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/PlayerDataService/MiddlewareTable.luau"
+                      ]
+                    },
+                    {
+                      "name": "PlayerWrapper",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/PlayerDataService/PlayerWrapper.luau"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "PlayerLeaderboard",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/PlayerLeaderboard/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "GetUserInfosByUserIdsAsync",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Packages/PlayerLeaderboard/GetUserInfosByUserIdsAsync.luau"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Services",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "FreeCoinsService",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Services/FreeCoinsService.luau"
+                  ]
+                },
+                {
+                  "name": "TraitorService",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Services/TraitorService.luau"
+                  ]
+                },
+                {
+                  "name": "RoundService",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Services/RoundService.luau"
+                  ]
+                },
+                {
+                  "name": "GameLoopService",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Services/GameLoopService.luau"
+                  ]
+                },
+                {
+                  "name": "ActionTrackingService",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Services/ActionTrackingService.luau"
+                  ]
+                },
+                {
+                  "name": "CoinSpawnerService",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Services/CoinSpawnerService.luau"
+                  ]
+                },
+                {
+                  "name": "AccidentalFallService",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Services/AccidentalFallService.luau"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Controllers",
+              "className": "Folder",
+              "pluginManaged": true,
+              "children": [
+                {
+                  "name": "PlayerDataController",
+                  "className": "ModuleScript",
+                  "pluginManaged": true,
+                  "filePaths": [
+                    "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Controllers/PlayerDataController/init.luau"
+                  ],
+                  "children": [
+                    {
+                      "name": "Schema",
+                      "className": "ModuleScript",
+                      "pluginManaged": true,
+                      "filePaths": [
+                        "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Controllers/PlayerDataController/Schema.luau"
+                      ]
+                    },
+                    {
+                      "name": "ObjectSchemas",
+                      "className": "Folder",
+                      "pluginManaged": true,
+                      "children": [
+                        {
+                          "name": "DeveloperProductReceipt",
+                          "className": "ModuleScript",
+                          "pluginManaged": true,
+                          "filePaths": [
+                            "d:/RobloxExternalScripting/GuessTheRule/ServerStorage/Modules/Controllers/PlayerDataController/ObjectSchemas/DeveloperProductReceipt.luau"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
