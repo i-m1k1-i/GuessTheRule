@@ -24,8 +24,6 @@ local playerDataServer = PlayerDataServer.new({
 	Middleware = middlewareTable,
 })
 
-playerDataServer:Initialize()
-
 local function onPlayerAdded(player : Player)
 	local playerDataManager = playerDataServer:GetPlayerDataManager(player)
 
@@ -41,15 +39,19 @@ local function onPlayerAdded(player : Player)
 	end)
 end
 
-Players.PlayerAdded:Connect(onPlayerAdded)
-for _, player in Players:GetPlayers() do
-	task.spawn(onPlayerAdded, player)
+local PlayerDataBootstrap = {}
+
+function PlayerDataBootstrap.Init()
+	playerDataServer:Initialize()
+	
+	Players.PlayerAdded:Connect(onPlayerAdded)
+	for _, player in Players:GetPlayers() do
+		task.spawn(onPlayerAdded, player)
+	end
 end
 
-local PlayerDataController = {}
-
-function PlayerDataController.GetObjectSchemaByName(name : string)
+function PlayerDataBootstrap.GetObjectSchemaByName(name : string)
 	return require(script.ObjectSchemas[name])
 end
 
-return PlayerDataController
+return PlayerDataBootstrap
