@@ -4,5 +4,8 @@ ModuleLoader.LoadModules(
 	{
 		game.ReplicatedStorage.Modules.Shared,
 		game.ServerStorage.Modules,
+	}, 
+	{
+		game.ServerStorage.Modules.Services.PlayerDataBootstrap
 	}
 )
