@@ -56,6 +56,14 @@ local PERSONAL_TASKS_BY_MAP: {[string]: {TaskDefinition}} = {
 			Reward = {Kind = "Coins", Amount = 10},
 		},
 		{
+			Id = "CollectGrapes",
+			Description = "Collect grapes",
+			Scope = "Personal",
+			Filters = {Collectible = "Grape"},
+			TotalNeeded = 3,
+			Reward = {Kind = "Coins", Amount = 10},
+		},
+		{
 			Id = "LightCampfire",
 			Description = "Light the campfire",
 			Scope = "Personal",
