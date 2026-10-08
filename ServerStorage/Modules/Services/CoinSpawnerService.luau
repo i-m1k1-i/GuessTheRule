@@ -20,6 +20,37 @@ local default = {
 	HeightOffset = 2.5,
 }
 
+local MAX_GROUND_LIFT = 5
+local GROUND_CLEARANCE = 0.05
+
+local function getGroundAdjustedPosition(position: Vector3): Vector3
+	local excludedCharacters = {}
+	for _, player in game.Players:GetPlayers() do
+		if player.Character then
+			table.insert(excludedCharacters, player.Character)
+		end
+	end
+
+	local raycastParams = RaycastParams.new()
+	raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+	raycastParams.FilterDescendantsInstances = excludedCharacters
+
+	local halfHeight = coinTemplate.Size.Y / 2
+	local rayOrigin = position + Vector3.new(0, MAX_GROUND_LIFT + halfHeight, 0)
+	local rayDirection = Vector3.new(0, -(MAX_GROUND_LIFT + 2 * halfHeight + GROUND_CLEARANCE), 0)
+	local result = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
+	if not result then
+		return position
+	end
+
+	local requiredY = result.Position.Y + halfHeight + GROUND_CLEARANCE
+	if requiredY <= position.Y or requiredY > position.Y + MAX_GROUND_LIFT then
+		return position
+	end
+
+	return Vector3.new(position.X, requiredY, position.Z)
+end
+
 local function getDecals(coin: BasePart): {Decal}
 	local decals = {}
 	for _, descendant in coin:GetDescendants() do
@@ -90,6 +121,8 @@ local function collectFakeCoin(player: Player, coin: BasePart)
 end
 
 local function spawnCoin(position: Vector3, isFake: boolean, onCollected: (Player, BasePart) -> ())
+	position = getGroundAdjustedPosition(position)
+
 	local coin = coinTemplate:Clone()
 	coin.Name = "CollectableCoin"
 	coin.Anchored = true
