@@ -9,7 +9,9 @@ local Actions = ActionsConfig.Enum
 
 local CoinSpawner = {}
 
-local coinTemplate = game.ReplicatedStorage.Assets.Models.Coin
+local coinTemplate = game.ReplicatedStorage.Assets.Models.Coin :: Model
+local coinPrimaryPart = coinTemplate.PrimaryPart
+assert(coinPrimaryPart, "Coin model must have a PrimaryPart")
 local collectSound = game.SoundService.SFX.Game.CoinCollect
 
 local SPAWNER_TAG = "CoinSpawner"
@@ -22,6 +24,9 @@ local default = {
 
 local MAX_GROUND_LIFT = 5
 local GROUND_CLEARANCE = 0.05
+local templatePivot = coinTemplate:GetPivot()
+local templateBounds, templateBoundsSize = coinTemplate:GetBoundingBox()
+local coinBottomOffset = templateBounds.Position.Y - templatePivot.Position.Y - templateBoundsSize.Y / 2
 
 local function getGroundAdjustedPosition(position: Vector3): Vector3
 	local excludedCharacters = {}
@@ -30,12 +35,15 @@ local function getGroundAdjustedPosition(position: Vector3): Vector3
 			table.insert(excludedCharacters, player.Character)
 		end
 	end
+	for _, coin in game.CollectionService:GetTagged(COIN_TAG) do
+		table.insert(excludedCharacters, coin)
+	end
 
 	local raycastParams = RaycastParams.new()
 	raycastParams.FilterType = Enum.RaycastFilterType.Exclude
 	raycastParams.FilterDescendantsInstances = excludedCharacters
 
-	local halfHeight = coinTemplate.Size.Y / 2
+	local halfHeight = templateBoundsSize.Y / 2
 	local rayOrigin = position + Vector3.new(0, MAX_GROUND_LIFT + halfHeight, 0)
 	local rayDirection = Vector3.new(0, -(MAX_GROUND_LIFT + 2 * halfHeight + GROUND_CLEARANCE), 0)
 	local result = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
@@ -43,7 +51,7 @@ local function getGroundAdjustedPosition(position: Vector3): Vector3
 		return position
 	end
 
-	local requiredY = result.Position.Y + halfHeight + GROUND_CLEARANCE
+	local requiredY = result.Position.Y - coinBottomOffset + GROUND_CLEARANCE
 	if requiredY <= position.Y or requiredY > position.Y + MAX_GROUND_LIFT then
 		return position
 	end
@@ -51,19 +59,22 @@ local function getGroundAdjustedPosition(position: Vector3): Vector3
 	return Vector3.new(position.X, requiredY, position.Z)
 end
 
-local function getDecals(coin: BasePart): {Decal}
-	local decals = {}
+local function getCoinVisuals(coin: Model)
+	local visuals = {}
 	for _, descendant in coin:GetDescendants() do
-		if descendant:IsA("Decal") then
-			table.insert(decals, descendant)
+		if descendant:IsA("BasePart") or descendant:IsA("Decal") then
+			table.insert(visuals, {
+				Instance = descendant,
+				Transparency = descendant.Transparency,
+			})
 		end
 	end
-	return decals
+	return visuals
 end
 
-local function playCoinCollectSound(coin: BasePart)
+local function playCoinCollectSound(coin: Model)
 	local sound = collectSound:Clone()
-	sound.Parent = coin
+	sound.Parent = coin.PrimaryPart
 	sound.Volume = collectSound.Volume
 	sound.PlaybackSpeed = collectSound.PlaybackSpeed
 	sound.Looped = false
@@ -74,9 +85,9 @@ local function playCoinCollectSound(coin: BasePart)
 	end)
 end
 
-local function animateCollectedCoin(coin: BasePart)
-	local startPosition = coin.Position
-	local decals = getDecals(coin)
+local function animateCollectedCoin(coin: Model)
+	local startPivot = coin:GetPivot()
+	local visuals = getCoinVisuals(coin)
 	local duration = 0.45
 	local startTime = os.clock()
 
@@ -93,11 +104,10 @@ local function animateCollectedCoin(coin: BasePart)
 			local rise = math.sin(progress * math.pi) * 2
 			local transparency = math.clamp(progress, 0, 1)
 
-			coin.Position = startPosition + Vector3.new(0, rise, 0)
-			coin.Transparency = transparency
+			coin:PivotTo(startPivot + Vector3.new(0, rise, 0))
 
-			for _, decal in decals do
-				decal.Transparency = transparency
+			for _, visual in visuals do
+				visual.Instance.Transparency = visual.Transparency + (1 - visual.Transparency) * transparency
 			end
 		end
 
@@ -105,7 +115,7 @@ local function animateCollectedCoin(coin: BasePart)
 	end)
 end
 
-local function collectCoin(player: Player, coin: BasePart)
+local function collectCoin(player: Player, coin: Model)
 	local playerData = PlayerDataUtil.GetPlayerDataFolder(player)
 	if playerData then
 		playerData.MainStats.Coins.Value += 1
@@ -115,26 +125,33 @@ local function collectCoin(player: Player, coin: BasePart)
 	animateCollectedCoin(coin)
 end
 
-local function collectFakeCoin(player: Player, coin: BasePart)
+local function collectFakeCoin(player: Player, coin: Model)
 	ActionTrackingService.FireAction(player, Actions.Common.Coin)
 	animateCollectedCoin(coin)
 end
 
-local function spawnCoin(position: Vector3, isFake: boolean, onCollected: (Player, BasePart) -> ())
+local function spawnCoin(position: Vector3, isFake: boolean, onCollected: (Player, Model) -> ())
 	position = getGroundAdjustedPosition(position)
 
 	local coin = coinTemplate:Clone()
 	coin.Name = "CollectableCoin"
-	coin.Anchored = true
-	coin.CanCollide = false
-	coin.CanTouch = true
-	coin.Transparency = 0
-	coin.Position = position
+	local primaryPart = coin.PrimaryPart
+	assert(primaryPart, "Cloned coin model must have a PrimaryPart")
+	for _, descendant in coin:GetDescendants() do
+		if descendant:IsA("BasePart") then
+			descendant.Anchored = true
+			descendant.CanCollide = false
+			descendant.CanTouch = false
+		end
+	end
+	primaryPart.CanTouch = true
+	local pivot = coin:GetPivot()
+	coin:PivotTo(CFrame.new(position) * pivot.Rotation)
 	coin:SetAttribute("IsFakeCoin", isFake)
 	coin.Parent = workspace
 
 	game.CollectionService:AddTag(coin, COIN_TAG)
-	coin.Touched:Connect(function(hit)
+	primaryPart.Touched:Connect(function(hit)
 		local character = hit.Parent
 		if not character then
 			return
@@ -146,7 +163,7 @@ local function spawnCoin(position: Vector3, isFake: boolean, onCollected: (Playe
 		end
 
 		coin:SetAttribute("IsCollecting", true)
-		coin.CanTouch = false
+		primaryPart.CanTouch = false
 		onCollected(player, coin)
 	end)
 
@@ -154,7 +171,7 @@ local function spawnCoin(position: Vector3, isFake: boolean, onCollected: (Playe
 end
 
 function CoinSpawner.SpawnFakeCoin(position: Vector3): boolean
-	local coinHeight = coinTemplate.Size.Y / 2
+	local coinHeight = -coinBottomOffset + GROUND_CLEARANCE
 	local coin = spawnCoin(position + Vector3.new(0, coinHeight, 0), true, collectFakeCoin)
 	game.Debris:AddItem(coin, 45)
 	return true

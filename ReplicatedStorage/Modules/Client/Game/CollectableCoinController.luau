@@ -3,10 +3,19 @@ local CollectableCoin = {}
 local TAG = "CollectableCoin"
 local SPIN_SPEED = 180
 
-local coins = {}
+local coins: {Model} = {}
 
-local function handleCoin(coin: BasePart)
-	if not coin or not coin:IsA("BasePart") then
+local function handleCoin(coin: Instance)
+	if not coin:IsA("Model") then
+		return
+	end
+	
+	local startTime = os.clock()
+	repeat
+		task.wait()
+	until coin.PrimaryPart or (os.clock() - startTime) >= 5
+	
+	if not coin.PrimaryPart then
 		return
 	end
 
@@ -23,13 +32,14 @@ function CollectableCoin.Init()
 	end)
 	
 	game["Run Service"].RenderStepped:Connect(function(deltaTime)
-		for i, coin in coins do
-			if not coin.Parent then
+		for i = #coins, 1, -1 do
+			local coin = coins[i]
+			if not coin.Parent or not coin.PrimaryPart then
 				table.remove(coins, i)
-				return
+			else
+				local rotation = CFrame.Angles(0, math.rad(SPIN_SPEED * deltaTime), 0)
+				coin:PivotTo(coin:GetPivot() * rotation)
 			end
-
-			coin.Rotation += Vector3.new(0, 0, SPIN_SPEED*deltaTime)
 		end
 	end)
 end
