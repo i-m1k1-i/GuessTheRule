@@ -68,6 +68,7 @@ function module.Init()
 		if not Modules.Workers.Interface then
 			CreateWait(Modules.Workers,"Interface")
 		end
+		Modules.Workers.HintDisplay:Setup(UI, Player)
 		Modules.Workers.Interface:Setup(UI,Modules,Bindables)
 		Modules.Workers.Backpack:Setup(Modules,Bindables)
 		Modules.Workers.InputService:Setup(Modules)

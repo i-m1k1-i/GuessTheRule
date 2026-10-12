@@ -47,6 +47,9 @@ local function grantAbility(player: Player, definition)
 	tool:SetAttribute("CantDelete", true)
 	tool:SetAttribute("TraitorAbility", true)
 	tool:SetAttribute("AbilityId", definition.Id)
+	if typeof(definition.Hint) == "string" then
+		tool:SetAttribute("Hint", definition.Hint)
+	end
 
 	if definition.MaxUses then
 		tool:SetAttribute("AbilityUsesRemaining", definition.MaxUses)

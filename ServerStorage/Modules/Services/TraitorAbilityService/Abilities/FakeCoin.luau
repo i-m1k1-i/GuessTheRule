@@ -4,6 +4,7 @@ return {
 	Id = "FakeCoin",
 	DisplayName = "Fake Coin",
 	Description = "Place a coin that triggers the Coin action but gives no coins.",
+	Hint = "Place a coin that triggers the Coin action but gives no coins.",
 	UnlockedByDefault = true,
 	Cooldown = 15,
 
