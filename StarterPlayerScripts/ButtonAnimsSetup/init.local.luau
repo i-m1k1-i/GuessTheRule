@@ -1,6 +1,8 @@
 local ButtonAnimation = require(script.ButtonAnimation)
 local PlayerGui = game.Players.LocalPlayer.PlayerGui
 
+local DEFAULT_SIZE_FACTOR = 1.1
+local DEFAULT_SIZEABLE = true
 
 local function isSystemGui(button: GuiButton)
 	if game.UserInputService.TouchEnabled then
@@ -19,8 +21,8 @@ local function handle(button: GuiButton)
 		and not button:HasTag("Ignore") 
 		and not isSystemGui(button)
 	then
-		local sizeFactor: number = button:GetAttribute("SizeFactor") or 1.15 
-		local sizeable: boolean = button:GetAttribute("Sizeable") or true
+		local sizeFactor: number = button:GetAttribute("SizeFactor") or DEFAULT_SIZE_FACTOR
+		local sizeable: boolean = button:GetAttribute("Sizeable") or DEFAULT_SIZEABLE
 		local buttonAnimation = ButtonAnimation.new(button, sizeFactor, sizeable)
 		
 		button.MouseEnter:Connect(function()
